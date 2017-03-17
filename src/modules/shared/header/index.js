@@ -1,8 +1,11 @@
 import React, {Component} from "react";
+import { Link } from 'react-router-dom';
 import Sidebar from "./sidebar";
 
 class Header extends Component{
-    state={loggedIn:false}
+    state={
+        loggedIn:false
+    }
     render(){
         return <nav className="navbar navbar-default navbar-static-top" role="navigation" >
                     <div className="navbar-header">
@@ -12,34 +15,36 @@ class Header extends Component{
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="index.html">DVD Rental App</a>
+                        <Link className="navbar-brand" to="/">DVD Rental App</Link>
                     </div>                            
                     <ul className="nav navbar-nav">
                         <li className="">
-                            <a href="/"><i className="fa fa-home"></i></a>
+                            <Link to="/"><i className="fa fa-home"></i></Link>
                         </li>
                         <li className="">
-                            <a href="/staff"><i className="fa fa-user"></i></a>
+                            <Link to="/staff"><i className="fa fa-user"></i></Link>
                         </li>
                     </ul>
                     <ul className="nav navbar-top-links navbar-right">            
                         <li className="" >
-                            <a href="/login"><i className="fa fa-lock"></i></a>
+                            <Link to="/login"><i className="fa fa-lock"></i></Link>
                         </li>
                         <li className="dropdown">
-                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <Link className="dropdown-toggle" data-toggle="dropdown" to="#">
                                 <i className="fa fa-user fa-fw"></i> <i className="fa fa-caret-down"></i>
-                            </a>
+                            </Link>
                             <ul className="dropdown-menu dropdown-user">
-                                <li><a href="#"><i className="fa fa-user fa-fw"></i> User Profile</a></li>
-                                <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a></li> -->
                                 <li>
-                                    <a href="/staff/stores">
+                                    <Link to="#"><i className="fa fa-user fa-fw"></i> User Profile</Link>
+                                </li>
+                                <li><Link to="#"><i className="fa fa-gear fa-fw"></i> Settings</Link></li>
+                                <li>
+                                    <Link to="/staff/stores">
                                         <i className="fa fa-square fa-fw"></i> Stores
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="divider"></li>
-                                <li><a href="#"><i className="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                                <li><Link to="#"><i className="fa fa-sign-out fa-fw"></i> Logout</Link></li>
                             </ul>                            
                         </li>                        
                     </ul>                    

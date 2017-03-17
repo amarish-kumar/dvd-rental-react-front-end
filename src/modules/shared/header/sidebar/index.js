@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { Link } from 'react-router-dom';
 
 class Sidebar extends Component{
     render(){
@@ -6,52 +7,52 @@ class Sidebar extends Component{
                 <div className="sidebar-nav navbar-collapse">
                     <ul className="nav" id="side-menu">                
                         <li>
-                            <a href="/staff/">
+                            <Link to="/staff/">
                                 <i className="fa fa-dashboard fa-fw"></i> Dashboard
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="#"><i className="fa fa-folder-open fa-fw"></i> Manage <span className="fa arrow"></span></a>
+                            <Link to="#"><i className="fa fa-folder-open fa-fw"></i> Manage <span className="fa arrow"></span></Link>
                             <ul className="nav nav-second-level">
                                 <li>
-                                    <a href="/staff/actors">
+                                    <Link to="/staff/actors">
                                         <i className="fa fa-child fa-fw"></i> Actors
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/staff/films">
+                                    <Link to="/staff/films">
                                         <i className="fa fa-film fa-fw"></i> Films
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/staff/categories">
+                                    <Link to="/staff/categories">
                                         <i className="fa fa-address-book-o fa-fw"></i> Categories
-                                    </a>
+                                    </Link>
                                 </li>                        
                                 <li>
-                                    <a href="/staff/customers">
+                                    <Link to="/staff/customers">
                                         <i className="fa fa-group fa-fw"></i> Customers
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/staff/addresses">
+                                    <Link to="/staff/addresses">
                                         <i className="fa fa-address-book-o fa-fw"></i> Address
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/staff/inventory">
+                                    <Link to="/staff/inventory">
                                         <i className="fa fa-server fa-fw"></i> Invetory
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/staff/rentals">
+                                    <Link to="/staff/rentals">
                                         <i className="fa fa-address-book-o fa-fw"></i> Rental
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/staff/payments">
+                                    <Link to="/staff/payments">
                                         <i className="fa fa-credit-card fa-fw"></i> Payment
-                                    </a>
+                                    </Link>
                                 </li>                                                  
                             </ul>                            
                         </li>                
