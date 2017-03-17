@@ -1,2 +1,2 @@
-# dvd-rental-react-front-end
-Sample front-end application using React.js for another project ->(dvd-rental-app-Hapi-Sequelize)
+- this is a front-end based on React.js for my another work in progress https://github.com/bobbyinsane/dvd-rental-app-Hapi-Sequelize/
+- Admin UI credits https://startbootstrap.com/template-overviews/sb-admin-2/
