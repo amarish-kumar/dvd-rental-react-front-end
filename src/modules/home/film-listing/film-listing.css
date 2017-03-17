@@ -1,0 +1,131 @@
+.film {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.film .caption {
+    margin-bottom: 15px;
+}
+
+.film .caption h6 {
+    color: #455a64;
+}
+
+.film .caption .price + .price {
+    margin-left: 15px;
+}
+
+.film.tumbnail {
+    box-shadow: 0 5px 25px 0 transparent;
+    transition: 0.3s linear;
+    padding-top: 0;
+}
+
+.film.tumbnail img:hover {
+    box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.2);
+}
+
+.single-film span {
+    display: inline-block;
+}
+
+.single-film .rating .fa-star, .single-film .rating .fa-star-o {
+    font-size: 16px;
+    color: #f7d4a0;
+    margin-left: 2px;
+}
+
+.single-film .rating + * {
+    margin-left: 15px;
+}
+
+.single-film h1.h1-variant-2 {
+    margin-bottom: 20px;
+}
+
+.single-film .caption:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.single-film .caption span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.single-film .caption .price {
+    font-weight: 400;
+}
+
+.single-film .caption .price.sale {
+    color: #e75854;
+    font-size: 33px;
+}
+
+.single-film .caption * + .price {
+    margin-left: 10.8%;
+}
+
+@media (max-width: 1199px) {
+    .single-film .caption * + .price {
+        margin-left: 7.8%;
+    }
+}
+
+.single-film .caption * + .quantity {
+    margin-left: 26px;
+}
+
+.single-film .caption .info-list {
+    border-bottom: 1px solid #f3f3ed;
+    border-top: 1px solid #f3f3ed;
+    font-family: Montserrat, sans-serif;
+    padding-top: 26px;
+    padding-bottom: 26px;
+    text-align: left;
+}
+
+.single-film .caption .info-list dt, .single-film .caption .info-list dd {
+    display: inline-block;
+    line-height: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.single-film .caption .info-list dt {
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: #a7b0b4;
+    width: 35%;
+    text-transform: uppercase;
+}
+
+.single-film .caption .info-list dd {
+    font-size: 15px;
+    color: #565452;
+    width: 62.5%;
+}
+
+.single-film .caption .share span.small {
+    margin-top: 9px;
+}
+
+@media (max-width: 991px) {
+    .single-film .caption .share span.small {
+        display: block;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .single-film .table-mobile tr {
+        padding-top: 0;
+    }
+    .single-film .table-mobile tr:before {
+        display: none;
+    }
+}

@@ -3,13 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.9.5",
-
+    "bootstrap": "^3.3.7",
+    "datatables": "^1.10.13",
     "datatables.net": "^1.10.13",
     "datatables.net-bs": "^1.10.13",
-    "validator": "^7.0.0",
-    "datatables": "^1.10.13",
-    "bootstrap": "^3.3.7",
+    "validator": "^7.0.0",    
     "font-awesome": "^4.7.0",
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
@@ -23,13 +21,19 @@
     "grunt-shell": "^2.1.0",
     "holderjs": "^2.9.4",
     "jquery": "^3.1.1",
-    "metismenu": "^2.6.1",        
+    "metismenu": "^2.6.1",
+    "react-scripts": "0.9.5",    
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
   },
   "dependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.14.3"
   },
   "scripts": {
     "start": "react-scripts start",
