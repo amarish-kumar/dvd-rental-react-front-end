@@ -6,7 +6,8 @@ import api from "../../utils";
 
 class Home extends Component {
   componentDidMount(){
-    this.props.getFilmCatalog();
+    if(this.props.films.length === 0)
+      this.props.getFilmCatalog();
   }
   render() {
     return (

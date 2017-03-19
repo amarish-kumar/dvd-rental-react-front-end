@@ -3,12 +3,11 @@ import {connect} from "react-redux";
 import api from "../../utils";
 
 class Login extends Component {
-    state={invalidMsg:"FIXME"}
-    componentDidMount(){
-        debugger;
-    }
-    onSubmit(){
-        this.props.doLogin();
+    state={invalidMsg:"FIXME"}    
+    onSubmit(evt){
+        evt.preventDefault();
+        //this.props.doLogin();
+        this.props.forceLogin();
     }
     render() {
         return (
@@ -38,12 +37,29 @@ class Login extends Component {
             );
   }
 }
-export default connect((state)=>state.login,{doLogin})(Login);
+export default connect((state)=>state.login,{doLogin, forceLogin})(Login);
 
+//constants
+export const FORCE_LOGIN = "FORCE_LOGIN";  
 
 //actions
 export function doLogin(){
     return dispatch=>api.get("/film");
+}
+
+export function forceLogin(){
+    return dispatch=>dispatch({
+        type:FORCE_LOGIN,
+        data:{
+           auth: {
+                token:"==TOKEN=",
+            },
+            uer:{
+                name:"JK",
+                id:1        
+            }
+        }
+    });
 }
 
 //reducers
@@ -54,8 +70,13 @@ let loginState = {
 };
 
 export const login = function(state=loginState, action){
+    let newState = {...state};
     switch(action.type){
-        default: return state;
+        case FORCE_LOGIN:
+            newState = action.data;
+            break;
+        default: ;
     }
+    return newState;
 }
 
