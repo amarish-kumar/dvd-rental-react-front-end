@@ -59,7 +59,7 @@ export default connect((state) => state.login, { doLogin, invalidInputs })(Login
 
 //constants
 export const INVALID_INPUTS = "INVALID_INPUTS";
-export const DO_LOGIN = "DO_LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 
 //actions
@@ -67,7 +67,7 @@ export function doLogin(credentials) {
     return dispatch => api.post("login", credentials)
         .then(res => {
             return dispatch({
-                type: DO_LOGIN,
+                type: LOGIN_SUCCESS,
                 data: {
                     loggedIn:true,
                     auth: {
@@ -101,7 +101,7 @@ export const login = function (state = loginState, action) {
         case INVALID_INPUTS:
             newState.loginError = action.data;
             break;
-        case DO_LOGIN:
+        case LOGIN_SUCCESS:
             newState = action.data;
             break;
         default: ;
