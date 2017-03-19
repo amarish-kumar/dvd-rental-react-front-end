@@ -4,23 +4,7 @@ import {connect} from "react-redux";
 import FilmListing from "./film-listing";
 import api from "../../utils";
 
-class Home extends Component {
-  componentDidMount(){
-    if(this.props.films.length === 0)
-      this.props.getFilmCatalog();
-  }
-  render() {
-    return (
-      <div className="row">
-          <div className="">
-              <FilmListing films={this.props.films}></FilmListing>              
-          </div>
-      </div>
-    );
-  }
-}
 
-export default connect((state)=>{return state.home;},{getFilmCatalog})(Home);
 
 
 //constants
@@ -46,7 +30,7 @@ let catalogState = {
 };
 
 export const home = function(state=catalogState, action){
-    let newState = {...state};    
+    let newState  = {...state};    
     switch(action.type){        
         case UPDATE_FILM_CATALOG:
           newState.films = action.data;
@@ -55,3 +39,24 @@ export const home = function(state=catalogState, action){
     }
     return newState;
 }
+
+
+//View
+class Home extends Component {
+  componentDidMount(){
+    if(this.props.films.length === 0)
+      this.props.getFilmCatalog();
+  }
+  render() {
+    return (
+      <div className="row">
+          <div className="">
+              <FilmListing films={this.props.films}></FilmListing>              
+          </div>
+      </div>
+    );
+  }
+}
+
+export default connect((state)=>{return state.home;},{getFilmCatalog})(Home);
+
