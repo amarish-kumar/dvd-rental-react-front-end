@@ -29,13 +29,13 @@ export const UPDATE_FILM_CATALOG = "UPDATE_FILM_CATALOG";
 //actions
 export function getFilmCatalog(){
     return dispatch=>api.get("/film?limit=10")    
-    .then(res=>{      
-      return dispatch({
-        type:UPDATE_FILM_CATALOG,
-        data:res.data
-      });
-    })
-    .catch(err=>console.error);
+          .then(res=>{      
+            return dispatch({
+              type:UPDATE_FILM_CATALOG,
+              data:res.data
+            });
+          })
+          .catch(err=>console.error);
 }
 
 //reducers

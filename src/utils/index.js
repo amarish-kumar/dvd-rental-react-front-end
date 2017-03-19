@@ -2,15 +2,19 @@ import axios from "axios";
 
 let baseURL = "http://localhost:8085/api/v1.0/";
 let http = axios.create({baseURL});
+let appStore;
+
 
 function getOptions(options){
-    //TODO
-    let token = "";//{}.state.login.auth.token;
+    let token = appStore.getState().login.auth.token;    
     options.headers = Object.assign(options.headers, token ? {authorization:token} : {});
     return options;
 }
 
 export default {
+    init(store){
+        appStore = store;
+    },
     get(url, request, options={headers:{}}) {                
         return http.get(url, getOptions(options))
             .then((response) => Promise.resolve(response))

@@ -6,6 +6,11 @@ import App from './App';
 import './index.css';
 
 import appStore from "./store";
+import api from "./utils";
+
+//inject appStore into api utils, so that auth headers can be added to all requests..
+//not sure if there is better way, but this works without anyside effects because, we are just reading the token..
+api.init(appStore);
 
 ReactDOM.render(
   <HashRouter>

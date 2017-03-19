@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+
+import * as validator from 'validator';
 import api from "../../utils";
 
 class Login extends Component {
-    state={invalidMsg:"FIXME"}    
-    onSubmit(evt){
+    onSubmit(evt) {
         evt.preventDefault();
-        //this.props.doLogin();
-        this.props.forceLogin();
+        let form = this.refs["login-form"];
+        let credentials = {
+            username: form.querySelector("[name='username']").value,
+            password: form.querySelector("[name='password']").value
+        };
+        let valid = validator.isLength(credentials.username, { min: 4, max: 16 }) &&
+            validator.isAlphanumeric(credentials.username) && validator.isLength(credentials.password, { min: 6, max: 12 });
+
+        if (valid)
+            this.props.doLogin(credentials);
+        else
+            this.props.invalidInputs();
     }
+    componentWillMount() {
+        this.props.loggedIn && this.props.history.push("/staff");
+    }
+    componentDidUpdate() {
+        this.props.loggedIn && this.props.history.push("/staff");
+    }
+
     render() {
         return (
             <div className="row">
@@ -21,58 +39,69 @@ class Login extends Component {
                             <form ref="login-form" role="form">
                                 <fieldset>
                                     <div className="form-group">
-                                        <input required className="form-control" placeholder="username" name="username" type="text" autoFocus/>
+                                        <input required className="form-control" placeholder="username" name="username" type="text" autoFocus />
                                     </div>
                                     <div className="form-group">
-                                        <input required className="form-control" placeholder="Password" name="password" type="password" value=""/>
-                                    </div>                            
+                                        <input required className="form-control" placeholder="Password" name="password" type="password" />
+                                    </div>
                                     <a href="#" onClick={this.onSubmit.bind(this)} className="btn btn-lg btn-success btn-block">Login</a>
                                 </fieldset>
                             </form>
-                            <p className="alert alert-danger" >{this.state.invalidMsg}</p>
+                            {this.props.loginError ? <p className="alert alert-danger" >{this.props.loginError}</p> : void 0}
                         </div>
                     </div>
                 </div>
             </div>
-            );
-  }
+        );
+    }
 }
-export default connect((state)=>state.login,{doLogin, forceLogin})(Login);
+export default connect((state) => state.login, { doLogin, invalidInputs })(Login);
 
 //constants
-export const FORCE_LOGIN = "FORCE_LOGIN";  
+export const INVALID_INPUTS = "INVALID_INPUTS";
+export const DO_LOGIN = "DO_LOGIN";
+export const LOGIN_ERROR = "LOGIN_ERROR";
 
 //actions
-export function doLogin(){
-    return dispatch=>api.get("/film");
+export function doLogin(credentials) {
+    return dispatch => api.post("login", credentials)
+        .then(res => {
+            return dispatch({
+                type: DO_LOGIN,
+                data: {
+                    loggedIn:true,
+                    auth: {
+                        token: res.headers["authorization"],
+                    },
+                    user: res.data
+                }
+            });
+        })
+        .catch(err => console.error);
 }
 
-export function forceLogin(){
-    return dispatch=>dispatch({
-        type:FORCE_LOGIN,
-        data:{
-           auth: {
-                token:"==TOKEN=",
-            },
-            uer:{
-                name:"JK",
-                id:1        
-            }
-        }
+export function invalidInputs() {
+    return dispatch => dispatch({
+        type: INVALID_INPUTS,
+        data: "Invalid inputs."
     });
 }
 
 //reducers
 let loginState = {
-    auth:{token:null},
-    user:{},
-    loginError:null
+    auth: { token: null },
+    user: {},
+    loginError: null,
+    loggedIn:false
 };
 
-export const login = function(state=loginState, action){
-    let newState = {...state};
-    switch(action.type){
-        case FORCE_LOGIN:
+export const login = function (state = loginState, action) {
+    let newState = { ...state };
+    switch (action.type) {
+        case INVALID_INPUTS:
+            newState.loginError = action.data;
+            break;
+        case DO_LOGIN:
             newState = action.data;
             break;
         default: ;
