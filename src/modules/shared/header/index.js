@@ -2,29 +2,19 @@ import React, {Component} from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import Sidebar from "./sidebar";
+import {doLogout} from "../../login";
 
 //constants
-const DO_LOGOUT = "DO_LOGOUT";
+
 
 //state
 let headerState = {};
 
-//actions
-let doLogout =  function(){
-    return dispatch=>dispatch({
-            type:DO_LOGOUT,
-            data:null
-        });
-}
 
 //reducer
 export function header(state = headerState, action){    
     let newState = {...state};    
-    switch (action.type) {
-        case DO_LOGOUT:
-            sessionStorage.removeItem("token");
-            newState.login = {auth:{token:null}};
-            break;        
+    switch (action.type) {            
         default: ;
     }
     return newState;

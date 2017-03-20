@@ -10,9 +10,7 @@ const GET_ALL_ACTORS     = "GET_ALL_ACTORS";
 
 //state
 const acttorsState = {
-    actors:[],
-    page:0,
-    limit:15
+    actors:[]
 };
 
 //actions
@@ -51,9 +49,22 @@ export function actors(state = acttorsState, action){
 };
 
 class Actors extends Component{
-    
+    limit=15;
+    currentPage=0;
+    onInteraction(dir){
+        
+        if(dir === "next")
+            this.currentPage+=this.limit;
+        else
+            this.currentPage-=this.limit;
+
+        this.currentPage = Math.max(this.currentPage, 0);
+        this.props.getAllActors({limit:this.limit, offset:this.currentPage});
+
+    }
+
     componentWillMount(){
-        this.props.getAllActors({limit:15, offset:0});
+        this.props.getAllActors({limit:this.limit, offset:this.currentPage});
     }
 
     render(){
@@ -61,9 +72,9 @@ class Actors extends Component{
                     <div className="col-lg-12">
                         <h1>Actors</h1>
                         <Grid 
-                            limit={this.props.limit} 
-                            currentPage={this.props.page} 
-                            onInteract="onInteraction" 
+                            limit={this.limit} 
+                            currentPage={this.currentPage} 
+                            onInteract={this.onInteraction.bind(this)}
                             data={this.props.actors}></Grid>
                     </div>
                </div>;

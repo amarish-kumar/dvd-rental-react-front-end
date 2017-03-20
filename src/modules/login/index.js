@@ -9,6 +9,7 @@ import api from "../../utils";
 //constants
 export const INVALID_INPUTS = "INVALID_INPUTS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const DO_LOGOUT = "DO_LOGOUT";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 
 //actions
@@ -28,6 +29,14 @@ export function doLogin(credentials) {
             });
         })
         .catch(err => console.error);
+}
+
+//actions
+export function doLogout(){
+    return dispatch=>dispatch({
+            type:DO_LOGOUT,
+            data:null
+        });
 }
 
 export function invalidInputs() {
@@ -56,6 +65,15 @@ export const login = function (state = loginState, action) {
         case LOGIN_SUCCESS:
             newState = action.data;
             break;
+        case DO_LOGOUT:
+            sessionStorage.removeItem("token");
+            newState = {
+                        auth: { token: null},
+                        user: {},
+                        loginError: null,
+                        loggedIn:false
+                    };
+            break; 
         default: ;
     }
     return newState;
