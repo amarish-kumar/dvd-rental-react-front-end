@@ -6,7 +6,7 @@ let appStore;
 
 
 function getOptions(options){
-    let token = appStore.getState().login.auth.token;        
+    let token       = appStore.getState().login.auth.token;    
     options.headers = Object.assign(options.headers, token ? {authorization:token} : {});
     return options;
 }

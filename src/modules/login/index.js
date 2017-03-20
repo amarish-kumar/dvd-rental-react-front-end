@@ -15,6 +15,7 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export function doLogin(credentials) {
     return dispatch => api.post("login", credentials)
         .then(res => {
+            sessionStorage.setItem("token", res.headers["authorization"]);
             return dispatch({
                 type: LOGIN_SUCCESS,
                 data: {
@@ -36,12 +37,14 @@ export function invalidInputs() {
     });
 }
 
+let token = sessionStorage.getItem("token") || null;
+
 //reducers
 let loginState = {
-    auth: { token: null },
+    auth: { token: token },
     user: {},
     loginError: null,
-    loggedIn:false
+    loggedIn:token !== null
 };
 
 export const login = function (state = loginState, action) {

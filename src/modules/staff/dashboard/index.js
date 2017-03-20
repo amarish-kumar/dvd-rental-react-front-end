@@ -4,11 +4,11 @@ import api from "../../../utils";
 
 
 //constants
-const UPDATE_CUSTOMER_COUNT = "UPDATE_CUSTOMER_COUNT";
-const TOTAL_PAYMENTS = "TOTAL_PAYMENTS";
-const UPDATE_INVENTORY_COUNT = "UPDATE_INVENTORY_COUNT";
-const UPDATE_LANGUAGE_COUNT = "UPDATE_LANGUAGE_COUNT";
-const UPDATE_TOP_MOVIES = "UPDATE_TOP_MOVIES";
+const UPDATE_CUSTOMER_COUNT     = "UPDATE_CUSTOMER_COUNT";
+const UPDATE_TOTAL_PAYMENTS     = "UPDATE_TOTAL_PAYMENTS";
+const UPDATE_INVENTORY_COUNT    = "UPDATE_INVENTORY_COUNT";
+const UPDATE_LANGUAGE_COUNT     = "UPDATE_LANGUAGE_COUNT";
+const UPDATE_TOP_MOVIES         = "UPDATE_TOP_MOVIES";
 
 //state
 const dashboardState = {
@@ -17,7 +17,7 @@ const dashboardState = {
     inventory:{count:null},
     language:{count:null},
     movies:{top:[]},
-}
+};
 
 //reducer
 export function dashboard(state = dashboardState, action){
@@ -26,7 +26,7 @@ export function dashboard(state = dashboardState, action){
         case UPDATE_CUSTOMER_COUNT:
           newState.customers.count = action.data;
           break;        
-        case TOTAL_PAYMENTS:
+        case UPDATE_TOTAL_PAYMENTS:
           newState.payments.sum = action.data;
           break;        
         case UPDATE_INVENTORY_COUNT:
@@ -41,14 +41,13 @@ export function dashboard(state = dashboardState, action){
         default:;
     }
     return newState;
-}
+};
 
 
 const actions ={
     getCustomerCount:()=>{
         return dispatch=>api.get("customer/count")    
-          .then(res=>{      
-              debugger;
+          .then(res=>{                    
             return dispatch({
               type:UPDATE_CUSTOMER_COUNT,
               data:res.data
@@ -60,7 +59,7 @@ const actions ={
         return dispatch=>api.get("payment/sum")    
           .then(res=>{      
             return dispatch({
-              type:UPDATE_CUSTOMER_COUNT,
+              type:UPDATE_TOTAL_PAYMENTS,
               data:res.data
             });
           })
@@ -70,7 +69,7 @@ const actions ={
         return dispatch=>api.get("inventory/count")    
           .then(res=>{      
             return dispatch({
-              type:UPDATE_CUSTOMER_COUNT,
+              type:UPDATE_INVENTORY_COUNT,
               data:res.data
             });
           })
@@ -80,7 +79,7 @@ const actions ={
         return dispatch=>api.get("language/count")    
           .then(res=>{      
             return dispatch({
-              type:UPDATE_CUSTOMER_COUNT,
+              type:UPDATE_LANGUAGE_COUNT,
               data:res.data
             });
           })
@@ -100,17 +99,15 @@ const actions ={
 
 //View
 class Dashboard extends Component {
-    componentWillMount() {
-        //!this.props.loggedIn && this.props.history.push("/login");
-    }
-
+    
     componentDidMount(){
         this.props.getCustomerCount();
         this.props.getTotalPayments();
         this.props.getTotalInventory();
         this.props.getTotalLanguages();
     }
-    render() {
+
+    render() {        
         return <div className="container-fluid">
                     <div className="row">
                         <h1></h1>
@@ -122,7 +119,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-group fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.customers.count}</div>
+                                            <div className="huge">{this.props.dashboard.customers.count}</div>
                                             <div>Customers</div>
                                         </div>
                                     </div>
@@ -137,7 +134,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-rupee fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.totalPayments}</div>
+                                            <div className="huge">{this.props.dashboard.payments.sum}</div>
                                             <div>Payments</div>
                                         </div>
                                     </div>
@@ -152,7 +149,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-server fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.inventoryCount}</div>
+                                            <div className="huge">{this.props.dashboard.inventory.count}</div>
                                             <div>Inventory</div>
                                         </div>
                                     </div>
@@ -167,7 +164,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-language fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.languageCount}</div>
+                                            <div className="huge">{this.props.dashboard.language.count}</div>
                                             <div>Languages</div>
                                         </div>
                                     </div>
@@ -178,7 +175,7 @@ class Dashboard extends Component {
                 </div>;
     }
 }
-export default connect((state) => state.dashboard, actions)(Dashboard);
+export default connect((state) => state, actions)(Dashboard);
 
 
 /*

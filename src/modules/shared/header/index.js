@@ -1,10 +1,41 @@
 import React, {Component} from "react";
+import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import Sidebar from "./sidebar";
 
-class Header extends Component{
-    state={
-        loggedIn:false
+//constants
+const DO_LOGOUT = "DO_LOGOUT";
+
+//state
+let headerState = {};
+
+//actions
+let doLogout =  function(){
+    return dispatch=>dispatch({
+            type:DO_LOGOUT,
+            data:null
+        });
+}
+
+//reducer
+export function header(state = headerState, action){    
+    let newState = {...state};    
+    switch (action.type) {
+        case DO_LOGOUT:
+            sessionStorage.removeItem("token");
+            newState.login = {auth:{token:null}};
+            break;        
+        default: ;
+    }
+    return newState;
+}
+
+//view
+class Header extends Component{    
+    onLogoutClick(evt){        
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.props.doLogout();
     }
     render(){
         return <nav className="navbar navbar-default navbar-static-top" role="navigation" >
@@ -44,12 +75,12 @@ class Header extends Component{
                                     </Link>
                                 </li>
                                 <li className="divider"></li>
-                                <li><Link to="#"><i className="fa fa-sign-out fa-fw"></i> Logout</Link></li>
+                                <li><a href="#" onClick={this.onLogoutClick.bind(this)}><i className="fa fa-sign-out fa-fw"></i> Logout</a></li>
                             </ul>                            
                         </li>                        
                     </ul>                    
-                    {this.state.loggedIn ? <Sidebar></Sidebar> : void 0}
+                    {this.props.login.loggedIn ? <Sidebar></Sidebar> : void 0}
                 </nav>
     }
 }
-export default Header;
+export default connect((state)=>state,{doLogout})(Header);

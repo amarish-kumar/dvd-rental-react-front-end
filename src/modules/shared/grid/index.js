@@ -4,27 +4,35 @@ import React, { Component } from 'react';
 class Grid extends Component {
     state={invalidMsg:"FIXME"}
     render() {
+        let data = this.props.data;        
         return (
-            <div class="panel panel-default">
-                <div class="panel-heading">&nbsp;</div>
-                <div class="panel-body">
-                    <div class="table">
-                        <table width="100%" class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>     
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                                                       
-                            </tbody>
-                        </table>
-                    </div>
+            <div className="panel panel-default">
+                <div className="panel-heading">&nbsp;</div>
+                <div className="panel-body">
+                    {
+                        data && data.length>0 ? 
+                        (<div className="table">
+                            <table width="100%" className="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>     
+                                        {Object.keys(data[0]).map(key=><th key={key}>{key}</th>)}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((item, i)=>{
+                                       return  <tr key={i}>
+                                                    {Object.keys(item).map(key=><td key={i+"_"+key}>{item[key]}</td>)}
+                                                </tr>;
+                                    })}                                                                      
+                                </tbody>
+                            </table>
+                        </div>) :  <span>No data found</span>
+                    }
                 </div>
-                <div class="panel-footer clearfix">
-                    <div class="pull-left" >Showing page {{currentPage}}</div>
-                    <div class="pull-right">
-                        <button >Prev</button>
+                <div className="panel-footer clearfix">
+                    <div className="pull-left" >Showing page {this.props.currentPage}</div>
+                    <div className="pull-right">
+                        <button>Prev</button>
                         <button>Next</button>
                     </div>
                 </div>
