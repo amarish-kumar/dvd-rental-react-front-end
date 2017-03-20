@@ -21,7 +21,7 @@ class Grid extends Component {
         this.table !== null && this.table.clear();          
     }
     render() {
-        let {data, currentPage, limit,onInteract} = this.props;        
+        let {data, currentPage, limit,onInteract} = this.props;          
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">&nbsp;</div>
@@ -38,7 +38,9 @@ class Grid extends Component {
                                 <tbody>
                                     {data.map((item, i)=>{
                                        return  <tr key={i}>
-                                                    {Object.keys(item).map(key=><td key={i+"_"+key}>{item[key]}</td>)}
+                                                    {Object.keys(item).map(key=><td key={i+"_"+key}>{
+                                                        typeof item[key] === "object" ? JSON.stringify(item[key]) : item[key]
+                                                        }</td>)}
                                                 </tr>;
                                     })}                                                                      
                                 </tbody>
