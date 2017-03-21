@@ -87,10 +87,10 @@ const actions ={
     },
     getTopMovies:()=>{       
         return dispatch=>api.get("topMoviesByRentals")    
-          .then(res=>{      
+          .then(res=>{              
             return dispatch({
-              type:UPDATE_CUSTOMER_COUNT,
-              data:res.body
+              type:UPDATE_TOP_MOVIES,
+              data:res.data
             });
           })
           .catch(err=>console.error);     
@@ -105,9 +105,13 @@ class Dashboard extends Component {
         this.props.getTotalPayments();
         this.props.getTotalInventory();
         this.props.getTotalLanguages();
+        this.props.getTopMovies();
     }
 
-    render() {        
+    render() {
+        let {dashboard} = this.props;
+        let topMovies = dashboard.movies.top;
+        
         return <div className="container-fluid">
                     <div className="row">
                         <h1></h1>
@@ -119,7 +123,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-group fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.dashboard.customers.count}</div>
+                                            <div className="huge">{dashboard.customers.count}</div>
                                             <div>Customers</div>
                                         </div>
                                     </div>
@@ -134,7 +138,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-rupee fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.dashboard.payments.sum}</div>
+                                            <div className="huge">{dashboard.payments.sum}</div>
                                             <div>Payments</div>
                                         </div>
                                     </div>
@@ -149,7 +153,7 @@ class Dashboard extends Component {
                                             <i className="fa fa-server fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.dashboard.inventory.count}</div>
+                                            <div className="huge">{dashboard.inventory.count}</div>
                                             <div>Inventory</div>
                                         </div>
                                     </div>
@@ -164,23 +168,15 @@ class Dashboard extends Component {
                                             <i className="fa fa-language fa-5x"></i>
                                         </div>
                                         <div className="col-xs-9 text-right">
-                                            <div className="huge">{this.props.dashboard.language.count}</div>
+                                            <div className="huge">{dashboard.language.count}</div>
                                             <div>Languages</div>
                                         </div>
                                     </div>
                                 </div>                    
                             </div>
                         </div>
-                    </div>                    
-                </div>;
-    }
-}
-export default connect((state) => state, actions)(Dashboard);
-
-
-/*
-
-<div className="row">
+                    </div>
+                    <div className="row">
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <i className="fa fa-bar-chart-o fa-fw"></i> Top movies
@@ -188,22 +184,30 @@ export default connect((state) => state, actions)(Dashboard);
                             <div className="panel-body">
                                 <div className="row">
                                     <div className="col-md-12">                            
-                                        <div v-if="topMovies && topMovies[0]" className="table">
+                                        {topMovies && topMovies[0] ? <div className="table">
                                             <table className="table table-bordered table-hover table-striped">
                                                 <thead>
                                                     <tr>     
-                                                        <th v-for="(field, i) in topMovies[1].fields">{{field.name}}</th>
+                                                        {topMovies[1].fields.map((field, i)=><th key={i}>{field.name}</th>)}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="(item, i) in topMovies[0]">
-                                                        <td v-for="(field, j) in topMovies[1].fields">{{item[field.name]}}</td>
-                                                    </tr>                                        
+                                                    {topMovies[0].map((item, j)=>{
+                                                        return <tr key={j}>
+                                                            {topMovies[1]
+                                                                .fields
+                                                                .map((field, j)=><td key={field.name+"_"+j}>{item[field.name]}</td>)}
+                                                            </tr>;
+                                                        })}                                                    
                                                 </tbody>
                                             </table>
-                                        </div>                            
-                                    </div>                        
+                                        </div> : void 0}                            
+                                    </div>                      
                                 </div>                    
                             </div>                
                         </div>
-                    </div>*/
+                    </div>                    
+                </div>;
+    }
+}
+export default connect((state) => state, actions)(Dashboard);
