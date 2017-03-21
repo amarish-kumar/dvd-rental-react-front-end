@@ -28,6 +28,12 @@ class Header extends Component{
         this.props.doLogout();
     }
     render(){
+
+        let login = this.props.login;    
+        let home = this.props.home;    
+        let loggedIn = login.loggedIn === true;
+        let isHome = home.isHome;
+
         return <nav className="navbar navbar-default navbar-static-top" role="navigation" >
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -42,23 +48,22 @@ class Header extends Component{
                         <li className="">
                             <Link to="/"><i className="fa fa-home"></i></Link>
                         </li>
-                        <li className="">
+                        {loggedIn && isHome ? <li className="">
                             <Link to="/staff"><i className="fa fa-user"></i></Link>
-                        </li>
+                        </li> : void 0}
                     </ul>
                     <ul className="nav navbar-top-links navbar-right">            
-                        <li className="" >
+                        {!loggedIn && isHome ? <li className="" >
                             <Link to="/login"><i className="fa fa-lock"></i></Link>
-                        </li>
-                        <li className="dropdown">
+                        </li> : void 0}
+                        {loggedIn && !isHome ? <li className="dropdown">
                             <Link className="dropdown-toggle" data-toggle="dropdown" to="#">
                                 <i className="fa fa-user fa-fw"></i> <i className="fa fa-caret-down"></i>
                             </Link>
                             <ul className="dropdown-menu dropdown-user">
                                 <li>
                                     <Link to="#"><i className="fa fa-user fa-fw"></i> User Profile</Link>
-                                </li>
-                                <li><Link to="#"><i className="fa fa-gear fa-fw"></i> Settings</Link></li>
+                                </li>                                
                                 <li>
                                     <Link to="/staff/stores">
                                         <i className="fa fa-square fa-fw"></i> Stores
@@ -67,9 +72,9 @@ class Header extends Component{
                                 <li className="divider"></li>
                                 <li><a href="#" onClick={this.onLogoutClick.bind(this)}><i className="fa fa-sign-out fa-fw"></i> Logout</a></li>
                             </ul>                            
-                        </li>                        
+                        </li> : void 0}                      
                     </ul>                    
-                    {this.props.login.loggedIn ? <Sidebar></Sidebar> : void 0}
+                    {loggedIn && !isHome ? <Sidebar></Sidebar> : void 0}
                 </nav>
     }
 }

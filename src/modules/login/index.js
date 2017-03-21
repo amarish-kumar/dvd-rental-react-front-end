@@ -97,9 +97,11 @@ class Login extends Component {
             this.props.invalidInputs();
     }
     componentWillMount() {
+        console.info("Login componentWillMount" + this.props.loggedIn);
         this.props.loggedIn && this.props.history.push("/staff");
     }
     componentDidUpdate() {
+        console.info("Login componentDidUpdate" + this.props.loggedIn);
         this.props.loggedIn && this.props.history.push("/staff");
     }
 

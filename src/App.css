@@ -1,3 +1,6 @@
 #page-wrapper.no-margin-left{
   margin:0px;
 }
+.a-app>.navbar{
+    margin-bottom: 0px;
+}

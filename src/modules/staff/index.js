@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import Dashboard from "./dashboard";
 import Actors from "./actors";
 import Films from "./films";
@@ -9,14 +9,12 @@ import Categories from "./categories";
 import Addresses from "./addresses";
 
 class Staff extends Component {
-    componentWillMount() {
-        !this.props.login.loggedIn && this.props.history.push("/login");
-    }
+    
     render() {
         return <div className="col-lg-12">                
                 {
                     this.props.login.loggedIn ? (<Switch>
-                                                    <Route exact={true} path="/staff/" component={Dashboard}></Route>
+                                                    <Route exact={true} path="/staff" component={Dashboard}></Route>
                                                     <Route path="/staff/actors" component={Actors}></Route>
                                                     <Route path="/staff/films" component={Films}></Route>
                                                     <Route path="/staff/addresses" component={Addresses}></Route>
@@ -31,4 +29,4 @@ class Staff extends Component {
             </div>;
     }
 }
-export default connect(state=>state)(Staff);
+export default withRouter(connect(state=>state)(Staff));

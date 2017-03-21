@@ -9,6 +9,7 @@ import api from "../../utils";
 
 //constants
 export const UPDATE_FILM_CATALOG = "UPDATE_FILM_CATALOG";  
+export const SET_HOME = "SET_HOME";  
 
 //actions
 export function getFilmCatalog(){
@@ -20,6 +21,13 @@ export function getFilmCatalog(){
             });
           })
           .catch(err=>console.error);
+}
+
+export function updateHome(isHome){
+    return dispatch=>dispatch({
+              type:SET_HOME,
+              data:isHome
+            });
 }
 
 //reducers
@@ -35,6 +43,9 @@ export const home = function(state=catalogState, action){
         case UPDATE_FILM_CATALOG:
           newState.films = action.data;
           break;        
+        case SET_HOME:
+          newState.isHome = action.data;
+          break;        
         default:;
     }
     return newState;
@@ -45,8 +56,14 @@ export const home = function(state=catalogState, action){
 class Home extends Component {
   componentDidMount(){
     if(this.props.films.length === 0)
-      this.props.getFilmCatalog();
+      this.props.getFilmCatalog();    
+    this.props.updateHome(true);
   }
+
+  componentWillUnmount(){
+    this.props.updateHome(false);
+  }
+
   render() {
     return (
       <div className="row">
@@ -58,5 +75,5 @@ class Home extends Component {
   }
 }
 
-export default connect((state)=>{return state.home;},{getFilmCatalog})(Home);
+export default connect((state)=>{return state.home;},{getFilmCatalog,updateHome})(Home);
 

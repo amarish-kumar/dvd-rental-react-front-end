@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Route,Switch,withRouter } from 'react-router-dom';
 
 import './App.css';
 
@@ -12,8 +13,12 @@ import Staff from "./modules/staff";
 
 class App extends Component {
   render(){
-    let isHome = false;
-    let loggedIn = true;
+    
+    let login = this.props.login;    
+    let home = this.props.home;    
+    let loggedIn = login.loggedIn === true;
+    let isHome = home.isHome;
+
     return (
       <div>
         <div className="a-app">
@@ -21,9 +26,11 @@ class App extends Component {
               <div id="page-wrapper" className={(isHome || (!isHome && !loggedIn)) ? "no-margin-left" : ""}>
                   <div className="row"></div>
                   <div className="row">
-                    <Route exact path="/" component={Home}/>
-                    <Route path="/login" component={Login}/>               
-                    <Route path="/staff" component={Staff}></Route> 
+                    <Switch>
+                      <Route exact={true} path="/" component={Home}/>
+                      <Route path="/login" component={Login}/>               
+                      <Route path="/staff" component={Staff}></Route> 
+                    </Switch>
                   </div>                                   
               </div>            
           </div>      
@@ -32,4 +39,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(connect(state=>state)(App));
